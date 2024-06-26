@@ -8,13 +8,13 @@ const App = () => {
     fetchTodos();
   },[]);
   const fetchTodos = async () => {
-    const res = await fetch('http://localhost:5000/api/todos');
+    const res = await fetch('http://localhost:3300/api');
     const data = await res.json();
     setTodos(data);
   };
 
   const addTodo = async (todo) => {
-    const res = await fetch('http://localhost:5000/api/todos',{
+    const res = await fetch('http://localhost:3300/api/create',{
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -28,8 +28,8 @@ const App = () => {
   const toggleComplete = async (id) => {
     const todoToToggle=todos.find(todo=>todo._id===id);
     const updatedTodo={...todoToToggle,completed:!todoToToggle.completed};
-    const res = await fetch(`http://localhost:5000/api/todos/${id}`,{
-      method: 'PUT',
+    const res = await fetch(`http://localhost:3300/api/up/${id}`,{
+      method: 'PATCH',
       headers: {
         'Content-type': 'application/json'
       },
@@ -40,7 +40,7 @@ const App = () => {
   };
 
     const deleteTodo=async (id) => {
-      const res = await fetch(`http://localhost:5000/api/todos/${id}`,{
+      const res = await fetch(`http://localhost:3300/api/del/${id}`,{
         method: 'DELETE'
       });
       setTodos(todos.filter(todo=>todo._id!==id));

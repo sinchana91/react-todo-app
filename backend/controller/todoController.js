@@ -1,5 +1,5 @@
-import {express} from 'express';
-import {Todo} from '../model/todo.js';
+import express from 'express';
+import Todo from '../models/Todo.js';
 
 //get all todos
 const getTodos = async (req, res) => {

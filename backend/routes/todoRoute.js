@@ -6,3 +6,5 @@ router.get('/', getTodos);
 router.post('/create', createTodo);
 router.patch('/up/:id', updateTodo);
 router.delete('/del/:id', deleteTodo);
+
+export default router;
