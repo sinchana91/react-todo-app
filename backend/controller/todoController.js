@@ -1,6 +1,6 @@
 import express from 'express';
 import Todo from '../models/Todo.js';
-
+import mongoose from 'mongoose';
 //get all todos
 const getTodos = async (req, res) => {
     try {
@@ -30,7 +30,7 @@ const updateTodo = async (req, res) => {
     const todo = req.body;
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No todo with that id');
     const updatedTodo = await Todo.findByIdAndUpdate(_id, { ...todo, _id }, { new: true });
-    res.json(updatedTodo);
+    res.status(200).json(updatedTodo);
     }
     catch(error){
         res.status(404).json({ message: error.message });
@@ -39,15 +39,27 @@ const updateTodo = async (req, res) => {
 
 //delete a todo
 const deleteTodo = async (req, res) => {
-    try{
-    const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No todo with that id');
-    await Todo.findByIdAndRemove(id);
-    res.json({ message: 'Todo deleted successfully' });
+    try {
+      const { id } = req.params;
+      
+      // Check if the ID is a valid Mongoose Object ID
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).send('No todo with that id');
+      }
+  
+      // Attempt to find and remove the todo item
+      const deletedTodo = await Todo.findByIdAndDelete(id);
+  
+      // Check if a todo item was actually deleted
+      if (!deletedTodo) {
+        return res.status(404).send('Todo not found');
+      }
+  
+      res.status(200).json({ message: 'Todo deleted successfully' });
+    } catch (error) {
+        console.log(error);
+      res.status(500).json({ message: error.message });
     }
-    catch(error){
-        res.status(404).json({ message: error.message });
-    }
-}
+  };
 
 export {getTodos, createTodo, updateTodo, deleteTodo};

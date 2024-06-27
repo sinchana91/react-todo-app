@@ -1,4 +1,4 @@
-import {mongoose} from 'mongoose';
+import mongoose from 'mongoose';
 
 const TodoSchema = new mongoose.Schema({
     title: {

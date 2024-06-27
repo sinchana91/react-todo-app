@@ -7,7 +7,7 @@ import todoRouter from './routes/todoRoute.js';
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3300;
+const PORT = process.env.PORT || 3000;
 const DBURI = process.env.DATABSE_URL;
 // console.log(DBURI);
 app.use(bodyParser.json());
